@@ -1,0 +1,20 @@
+# Python
+agents/venv/
+agents/__pycache__/
+agents/*.pyc
+agents/.env
+
+# Laravel
+backend/vendor/
+backend/node_modules/
+backend/.env
+backend/storage/logs/*
+backend/storage/framework/cache/*
+backend/storage/framework/sessions/*
+
+# React (à venir)
+frontend/node_modules/
+frontend/.env
+
+# OS
+.DS_Store
