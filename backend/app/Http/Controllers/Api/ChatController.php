@@ -8,16 +8,23 @@ use Illuminate\Support\Facades\Http;
 
 class ChatController extends Controller
 {
-    // POST /api/chat
     public function message(Request $request)
     {
-        $request->validate(['message' => 'required|string']);
+        $request->validate(['message' => 'required|string']); // on recoit le message react
 
-        // Appel au microservice Python LangChain
-        $response = Http::post('http://127.0.0.1:8000/chat', [
-            'message' => $request->message,
+        $response = Http::post('http://127.0.0.1:8000/chat', [ // l api revient egalement avec le response de langchain c est synchrone
+            'message' => $request->message, // laravel envoit le message au back python pour l agent IA
         ]);
 
-        return response()->json($response->json());
+        // Debug
+        if ($response->failed()) {
+            return response()->json([
+                'error' => 'Microservice Python indisponible',
+                'status' => $response->status(),
+                'body' => $response->body()
+            ], 500);
+        }
+
+        return response()->json($response->json()); // on envoit la reponse au front react
     }
 }
